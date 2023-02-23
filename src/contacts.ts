@@ -4,6 +4,9 @@ import sortBy from 'sort-by';
 
 export type Contact = {
 	id: string;
+	avatar?: string;
+	twitter?: string;
+	notes: string;
 	first?: string;
 	last?: string;
 	favorite?: boolean;
@@ -23,7 +26,7 @@ export async function getContacts(query?: string) {
 export async function createContact() {
 	await fakeNetwork();
 	let id = Math.random().toString(36).substring(2, 9);
-	let contact = { id, createdAt: Date.now() };
+	let contact = { id, createdAt: Date.now() } as Contact;
 	let contacts = await getContacts();
 	contacts.unshift(contact);
 	await set(contacts);
@@ -33,6 +36,7 @@ export async function createContact() {
 export async function getContact(id: string) {
 	await fakeNetwork(`contact:${id}`);
 	let contacts = await localforage.getItem<Contact[]>('contacts');
+	console.log({ contacts });
 	let contact = contacts?.find((contact) => contact.id === id);
 	return contact ?? null;
 }
