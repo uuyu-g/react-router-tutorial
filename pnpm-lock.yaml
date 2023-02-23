@@ -3,19 +3,22 @@ lockfileVersion: 5.4
 specifiers:
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
+  '@types/sort-by': ^1.2.0
   '@vitejs/plugin-react-swc': ^3.0.0
   localforage: ^1.10.0
   match-sorter: ^6.3.1
+  prettier: ^2.8.4
   react: ^18.2.0
   react-dom: ^18.2.0
   react-router-dom: ^6.8.1
   sort-by: ^1.2.0
-  typescript: ^4.9.3
+  typescript: ^4.9.5
   vite: ^4.1.0
 
 dependencies:
   localforage: 1.10.0
   match-sorter: 6.3.1
+  prettier: 2.8.4
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
@@ -24,6 +27,7 @@ dependencies:
 devDependencies:
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
+  '@types/sort-by': 1.2.0
   '@vitejs/plugin-react-swc': 3.2.0_vite@4.1.2
   typescript: 4.9.5
   vite: 4.1.2
@@ -369,6 +373,10 @@ packages:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
     dev: true
 
+  /@types/sort-by/1.2.0:
+    resolution: {integrity: sha512-apuh0Itbhv/JUIHVYkeUGPiAwUen0gAFyMHBYaCqpthcq20tsLT8Qs9yMntk9jMG85CoZp3ze2Sv+BhuKhP1gw==}
+    dev: true
+
   /@vitejs/plugin-react-swc/3.2.0_vite@4.1.2:
     resolution: {integrity: sha512-IcBoXL/mcH7JdQr/nfDlDwTdIaH8Rg7LpfQDF4nAht+juHWIuv6WhpKPCSfY4+zztAaB07qdBoFz1XCZsgo3pQ==}
     peerDependencies:
@@ -498,6 +506,12 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
+
+  /prettier/2.8.4:
+    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: false
 
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
