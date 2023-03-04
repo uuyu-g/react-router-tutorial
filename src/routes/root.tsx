@@ -1,5 +1,13 @@
 import { ContactSchema, createContact } from './../contacts';
-import { Form, Link, NavLink, Outlet, redirect, useLoaderData } from 'react-router-dom';
+import {
+	Form,
+	Link,
+	NavLink,
+	Outlet,
+	redirect,
+	useLoaderData,
+	useNavigation,
+} from 'react-router-dom';
 import { getContacts } from '../contacts';
 import { z } from 'zod';
 
@@ -19,6 +27,7 @@ const responseSchema = z.object({
 
 export default function Root() {
 	const { contacts } = responseSchema.parse(useLoaderData());
+	const navigation = useNavigation();
 
 	return (
 		<>
@@ -70,7 +79,7 @@ export default function Root() {
 					)}
 				</nav>
 			</div>
-			<div id="detail">
+			<div id="detail" className={navigation.state === 'loading' ? 'loading' : ''}>
 				<Outlet />
 			</div>
 		</>
