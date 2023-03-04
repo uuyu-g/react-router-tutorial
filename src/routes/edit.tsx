@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, Form, redirect, useLoaderData } from 'react-router-dom';
+import { ActionFunctionArgs, Form, redirect, useLoaderData, useNavigate } from 'react-router-dom';
 import { Contact, ContactSchema, updateContact } from '../contacts';
 import { z, ZodType } from 'zod';
 
@@ -23,6 +23,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 
 export default function EditContact() {
 	const { contact } = responseSchema.parse(useLoaderData());
+	const navigate = useNavigate();
 
 	return (
 		<Form method="post" id="contact-form">
@@ -63,7 +64,14 @@ export default function EditContact() {
 			</label>
 			<p>
 				<button type="submit">Save</button>
-				<button type="button">Cancel</button>
+				<button
+					type="button"
+					onClick={() => {
+						navigate(-1);
+					}}
+				>
+					Cancel
+				</button>
 			</p>
 		</Form>
 	);
