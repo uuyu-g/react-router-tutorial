@@ -1,11 +1,11 @@
 import { ContactSchema, createContact } from './../contacts';
-import { Form, Link, Outlet, useLoaderData } from 'react-router-dom';
+import { Form, Link, NavLink, Outlet, redirect, useLoaderData } from 'react-router-dom';
 import { getContacts } from '../contacts';
 import { z } from 'zod';
 
 export async function action() {
 	const contact = await createContact();
-	return { contact };
+	return redirect(`/contacts/${contact.id}/edit`);
 }
 
 export async function loader() {
@@ -45,7 +45,12 @@ export default function Root() {
 						<ul>
 							{contacts.map((contact) => (
 								<li key={contact.id}>
-									<Link to={`contacts/${contact.id}`}>
+									<NavLink
+										to={`contacts/${contact.id}`}
+										className={({ isActive, isPending }) =>
+											isActive ? 'active' : isPending ? 'pending' : ''
+										}
+									>
 										{contact.first || contact.last ? (
 											<>
 												{contact.first} {contact.last}
@@ -54,7 +59,7 @@ export default function Root() {
 											<i>No Name</i>
 										)}{' '}
 										{contact.favorite && <span>★</span>}
-									</Link>
+									</NavLink>
 								</li>
 							))}
 						</ul>
