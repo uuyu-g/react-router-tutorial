@@ -1,6 +1,7 @@
-import { Contact, createContact } from './../contacts';
+import { ContactSchema, createContact } from './../contacts';
 import { Form, Link, Outlet, useLoaderData } from 'react-router-dom';
 import { getContacts } from '../contacts';
+import { z } from 'zod';
 
 export async function action() {
 	const contact = await createContact();
@@ -12,8 +13,13 @@ export async function loader() {
 	return { contacts };
 }
 
+const responseSchema = z.object({
+	contacts: z.array(ContactSchema),
+});
+
 export default function Root() {
-	const { contacts } = useLoaderData() as { contacts: Contact[] };
+	const { contacts } = responseSchema.parse(useLoaderData());
+
 	return (
 		<>
 			<div id="sidebar">

@@ -1,5 +1,10 @@
 import { Form, LoaderFunctionArgs, useLoaderData } from 'react-router-dom';
-import { type Contact, getContact } from '../contacts';
+import { type Contact, ContactSchema, getContact } from '../contacts';
+import { z } from 'zod';
+
+const responseSchema = z.object({
+	contact: ContactSchema.nullable(),
+});
 
 export async function loader({ params }: LoaderFunctionArgs) {
 	const contact = await getContact(params.contactId!);
@@ -7,7 +12,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
 }
 
 export default function Contact() {
-	const { contact } = useLoaderData() as { contact: Contact };
+	const { contact } = responseSchema.parse(useLoaderData());
+
+	if (!contact) throw new Error('not found');
 
 	return (
 		<div id="contact">

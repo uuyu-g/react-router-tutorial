@@ -1,17 +1,29 @@
 import localforage from 'localforage';
 import { matchSorter } from 'match-sorter';
 import sortBy from 'sort-by';
+import { z, ZodType } from 'zod';
 
 export type Contact = {
 	id: string;
 	avatar?: string;
 	twitter?: string;
-	notes: string;
+	notes?: string;
 	first?: string;
 	last?: string;
 	favorite?: boolean;
 	createdAt: number;
 };
+
+export const ContactSchema: ZodType<Contact> = z.object({
+	id: z.string(),
+	avatar: z.string().optional(),
+	twitter: z.string().optional(),
+	notes: z.string().optional(),
+	first: z.string().optional(),
+	last: z.string().optional(),
+	favorite: z.boolean().optional(),
+	createdAt: z.number(),
+});
 
 export async function getContacts(query?: string) {
 	await fakeNetwork(`getContacts:${query}`);
@@ -41,7 +53,7 @@ export async function getContact(id: string) {
 	return contact ?? null;
 }
 
-export async function updateContact(id: string, updates: Contact[]) {
+export async function updateContact(id: string, updates: Partial<Contact>) {
 	await fakeNetwork();
 	let contacts = await localforage.getItem<Contact[]>('contacts');
 	let contact = contacts?.find((contact) => contact.id === id);
