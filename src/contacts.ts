@@ -25,7 +25,7 @@ export const ContactSchema: ZodType<Contact> = z.object({
 	createdAt: z.number(),
 });
 
-export async function getContacts(query?: string) {
+export async function getContacts(query?: string | null) {
 	await fakeNetwork(`getContacts:${query}`);
 	let contacts = await localforage.getItem<Contact[]>('contacts');
 	if (!contacts) contacts = [];
