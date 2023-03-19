@@ -10,7 +10,8 @@ import {
 	useNavigation,
 } from 'react-router-dom';
 import { getContacts } from '../contacts';
-import { z } from 'zod';
+import { z, ZodType } from 'zod';
+import { useEffect, useRef } from 'react';
 
 export async function action() {
 	const contact = await createContact();
@@ -21,16 +22,22 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const url = new URL(request.url);
 	const q = url.searchParams.get('q');
 	const contacts = await getContacts(q);
-	return { contacts };
+	return { contacts, q };
 }
 
-const responseSchema = z.object({
+const responseSchema: ZodType<Awaited<ReturnType<typeof loader>>> = z.object({
 	contacts: z.array(ContactSchema),
+	q: z.string().nullable(),
 });
 
 export default function Root() {
-	const { contacts } = responseSchema.parse(useLoaderData());
+	const { contacts, q } = responseSchema.parse(useLoaderData());
 	const navigation = useNavigation();
+	const qRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		qRef.current!.value = q ?? '';
+	}, [q]);
 
 	return (
 		<>
@@ -44,6 +51,8 @@ export default function Root() {
 							placeholder="Search"
 							type="search"
 							name="q"
+							defaultValue={q ?? ''}
+							ref={qRef}
 						/>
 						<div id="search-spinner" aria-hidden hidden={true} />
 						<div className="sr-only" aria-live="polite"></div>

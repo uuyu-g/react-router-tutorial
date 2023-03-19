@@ -16,6 +16,9 @@ const router = createBrowserRouter([
 		errorElement: <ErrorPage />,
 		loader: rootLoader,
 		action: rootAction,
+		shouldRevalidate: ({ currentUrl }) => {
+			return currentUrl.pathname.includes('contacts');
+		},
 		children: [
 			{ index: true, element: <Index /> },
 			{
